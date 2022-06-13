@@ -1,0 +1,1724 @@
+---
+title: "R_mini"
+author: "kim_beom_ki"
+date: '2022-03-21'
+output:
+  html_document: default
+  pdf_document: default
+---
+## ミニプロジェクト4大宮殿(景福宮、昌徳、昌慶、徳寿宮)に関する外国人、内国人データ分析
+
+
+### 言語圏別の外国人観光客の訪問推移 ****************
+
+options("install.lock"=FALSE)
+install.packages("dygraphs")
+install.packages('xts')
+install.packages("ggrepel")
+install.packages("tidyverse")
+
+```{r}
+# 2015
+vt_15 <- read.csv("visitor_2015.csv")
+
+library(dplyr)
+
+# 사용자 함수 - summarise(sum columns)
+lng_y <- function(a, b, c, d, e){
+  
+  sum_y <- a %>%
+    summarise(sum(b),
+              sum(c),
+              sum(d),
+              sum(e))
+  return(sum_y)
+  
+}
+
+# 영어권
+en_15 <- lng_y(vt_15,
+               vt_15$경복궁.영어권., vt_15$덕수궁.영어권.,
+               vt_15$창경궁.영어권., vt_15$창덕궁.영어권.)
+en_15 <- sum(en_15)
+
+# 중국어권
+ch_15 <- lng_y(vt_15,
+               vt_15$경복궁.중국어권., vt_15$덕수궁.중국어권.,
+               vt_15$창경궁.중국어권., vt_15$창덕궁.중국어권.)
+ch_15 <- sum(ch_15)
+
+# 일본어권
+jp_15 <- lng_y(vt_15,
+               vt_15$경복궁.일본어권., vt_15$덕수궁.일본어권.,
+               vt_15$창경궁.일본어권., vt_15$창덕궁.일본어권.)
+jp_15 <- sum(jp_15)
+
+# 기타외국인
+ect_15 <- lng_y(vt_15,
+                vt_15$경복궁.기타외국인., vt_15$덕수궁.기타외국인.,
+                vt_15$창경궁.기타외국인., vt_15$창덕궁.기타외국인.)
+ect_15 <- sum(ect_15)
+
+# 2015 데이터 프레임
+visitor_15 <- c(en_15, ch_15, jp_15, ect_15)
+language <- c("영어권", "중국어권", "일본어권", "기타외국인")
+vt_15 <- data.frame(language, visitor_15);vt_15
+
+# ====
+# 2016
+vt_16 <- read.csv("visitor_2016.csv")
+
+library(dplyr)
+
+# 영어권
+en_16 <- lng_y(vt_16,
+               vt_16$경복궁.영어권., vt_16$덕수궁.영어권.,
+               vt_16$창경궁.영어권., vt_16$창덕궁.영어권.)
+en_16 <- sum(en_16)
+
+# 중국어권
+ch_16 <- lng_y(vt_16,
+               vt_16$경복궁.중국어권., vt_16$덕수궁.중국어권.,
+               vt_16$창경궁.중국어권., vt_16$창덕궁.중국어권.)
+ch_16 <- sum(ch_16)
+
+# 일본어권
+jp_16 <- lng_y(vt_16,
+               vt_16$경복궁.일본어권., vt_16$덕수궁.일본어권.,
+               vt_16$창경궁.일본어권., vt_16$창덕궁.일본어권.)
+jp_16 <- sum(jp_16)
+
+# 기타외국인
+ect_16 <- lng_y(vt_16,
+                vt_16$경복궁.기타외국인., vt_16$덕수궁.기타외국인.,
+                vt_16$창경궁.기타외국인., vt_16$창덕궁.기타외국인.)
+ect_16 <- sum(ect_16)
+
+# 2016 데이터 프레임
+visitor_16 <- c(en_16, ch_16, jp_16, ect_16)
+vt_16 <- data.frame(language, visitor_16);vt_16
+
+# ====
+# 2017
+vt_17 <- read.csv("visitor_2017.csv")
+
+library(dplyr)
+
+# 영어권
+en_17 <- lng_y(vt_17,
+               vt_17$경복궁.영어권., vt_17$덕수궁.영어권.,
+               vt_17$창경궁.영어권., vt_17$창덕궁.영어권.)
+en_17 <- sum(en_17)
+
+# 중국어권
+ch_17 <- lng_y(vt_17,
+               vt_17$경복궁.중국어권., vt_17$덕수궁.중국어권.,
+               vt_17$창경궁.중국어권., vt_17$창덕궁.중국어권.)
+ch_17 <- sum(ch_17)
+
+# 일본어권
+jp_17 <- lng_y(vt_17,
+               vt_17$경복궁.일본어권., vt_17$덕수궁.일본어권.,
+               vt_17$창경궁.일본어권., vt_17$창덕궁.일본어권.)
+jp_17 <- sum(jp_17)
+
+# 기타외국인
+ect_17 <- lng_y(vt_17,
+                vt_17$경복궁.기타외국인., vt_17$덕수궁.기타외국인.,
+                vt_17$창경궁.기타외국인., vt_17$창덕궁.기타외국인.)
+ect_17 <- sum(ect_17)
+
+# 2017 데이터 프레임
+visitor_17 <- c(en_17, ch_17, jp_17, ect_17)
+vt_17 <- data.frame(language, visitor_17);vt_17
+
+# ====
+# 2018
+vt_18 <- read.csv("visitor_2018.csv")
+
+library(dplyr)
+
+# 영어권
+en_18 <- lng_y(vt_18,
+               vt_18$경복궁.영어권., vt_18$덕수궁.영어권.,
+               vt_18$창경궁.영어권., vt_18$창덕궁.영어권.)
+en_18 <- sum(en_18)
+
+# 중국어권
+ch_18 <- lng_y(vt_18,
+               vt_18$경복궁.중국어권., vt_18$덕수궁.중국어권.,
+               vt_18$창경궁.중국어권., vt_18$창덕궁.중국어권.)
+ch_18 <- sum(ch_18)
+
+# 일본어권
+jp_18 <- lng_y(vt_18,
+               vt_18$경복궁.일본어권., vt_18$덕수궁.일본어권.,
+               vt_18$창경궁.일본어권., vt_18$창덕궁.일본어권.)
+jp_18 <- sum(jp_18)
+
+# 기타외국인
+ect_18 <- lng_y(vt_18,
+                vt_18$경복궁.기타외국인., vt_18$덕수궁.기타외국인.,
+                vt_18$창경궁.기타외국인., vt_18$창덕궁.기타외국인.)
+ect_18 <- sum(ect_18)
+
+# 2018 데이터 프레임
+visitor_18 <- c(en_18, ch_18, jp_18, ect_18)
+vt_18 <- data.frame(language, visitor_18);vt_18
+
+# ====
+# 2019
+vt_19 <- read.csv("visitor_2019.csv")
+
+library(dplyr)
+
+# 영어권
+en_19 <- lng_y(vt_19,
+               vt_19$경복궁.영어권., vt_19$덕수궁.영어권.,
+               vt_19$창경궁.영어권., vt_19$창덕궁.영어권.)
+en_19 <- sum(en_19)
+
+# 중국어권
+ch_19 <- lng_y(vt_19,
+               vt_19$경복궁.중국어권., vt_19$덕수궁.중국어권.,
+               vt_19$창경궁.중국어권., vt_19$창덕궁.중국어권.)
+ch_19 <- sum(ch_19)
+
+# 일본어권
+jp_19 <- lng_y(vt_19,
+               vt_19$경복궁.일본어권., vt_19$덕수궁.일본어권.,
+               vt_19$창경궁.일본어권., vt_19$창덕궁.일본어권.)
+jp_19 <- sum(jp_19)
+
+# 기타외국인
+ect_19 <- lng_y(vt_19,
+                vt_19$경복궁.기타외국인., vt_19$덕수궁.기타외국인.,
+                vt_19$창경궁.기타외국인., vt_19$창덕궁.기타외국인.)
+ect_19 <- sum(ect_19)
+
+# 2019 데이터 프레임
+visitor_19 <- c(en_19, ch_19, jp_19, ect_19)
+vt_19 <- data.frame(language, visitor_19);vt_19
+
+# ====
+# 2020
+vt_20 <- read.csv("visitor_2020.csv")
+
+library(dplyr)
+
+# 영어권
+en_20 <- lng_y(vt_20,
+               vt_20$경복궁.영어권., vt_20$덕수궁.영어권.,
+               vt_20$창경궁.영어권., vt_20$창덕궁.영어권.)
+en_20 <- sum(en_20)
+
+# 중국어권
+ch_20 <- lng_y(vt_20,
+               vt_20$경복궁.중국어권., vt_20$덕수궁.중국어권.,
+               vt_20$창경궁.중국어권., vt_20$창덕궁.중국어권.)
+ch_20 <- sum(ch_20)
+
+# 일본어권
+jp_20 <- lng_y(vt_20,
+               vt_20$경복궁.일본어권., vt_20$덕수궁.일본어권.,
+               vt_20$창경궁.일본어권., vt_20$창덕궁.일본어권.)
+jp_20 <- sum(jp_20)
+
+# 기타외국인
+ect_20 <- lng_y(vt_20,
+                vt_20$경복궁.기타외국인., vt_20$덕수궁.기타외국인.,
+                vt_20$창경궁.기타외국인., vt_20$창덕궁.기타외국인.)
+ect_20 <- sum(ect_20)
+
+# 2020 데이터 프레임
+visitor_20 <- c(en_20, ch_20, jp_20, ect_20)
+vt_20 <- data.frame(language, visitor_20);vt_20
+
+
+# 2015 ~ 2020 데이터 프레임
+EN <- c(en_15, en_16, en_17, en_18, en_19, en_20)
+CH <- c(ch_15, ch_16, ch_17, ch_18, ch_19, ch_20)
+JP <- c(jp_15, jp_16, jp_17, jp_18, jp_19, jp_20)
+ECT <- c(ect_15, ect_16, ect_17, ect_18, ect_19, ect_20)
+
+year <- c("2015", "2016", "2017", "2018", "2019", "2020")
+vt_pl <- data.frame(year, EN, CH, JP, ECT);vt_pl
+#시각화 - line graph
+library(ggplot2)
+
+visitor_lang <- ggplot(vt_pl,aes(x=year))+
+  geom_line(aes(y=EN, color = "영어권"), group=1)+
+  geom_line(aes(y=CH, color = "중국어권"),group=2)+
+  geom_line(aes(y=JP, color = "일본어권"),group=3)+
+  geom_line(aes(y=ECT, color = "기타언어권"),group=4)+
+  ggtitle("언어권별 외국인 관광객 방문 추이")+
+  labs(x = "연도", y = "관광객 수", color = "언어권")
+
+visitor_lang
+
+# 반응형 시계열 그래프
+
+library(dygraphs)
+library(xts)
+
+# year 의 요인들을 date 타입으로 바꾸기
+# 컬럼 내 특정 값 바꾸기
+vt_pl[vt_pl$year == 2015, "year"] = "2015-01-01"
+vt_pl[vt_pl$year == 2016, "year"] = "2016-01-01"
+vt_pl[vt_pl$year == 2017, "year"] = "2017-01-01"
+vt_pl[vt_pl$year == 2018, "year"] = "2018-01-01"
+vt_pl[vt_pl$year == 2019, "year"] = "2019-01-01"
+vt_pl[vt_pl$year == 2020, "year"] = "2020-01-01"
+# year 값들을 date 타입으로 바꾸고 확인
+vt_pl$year <- as.POSIXct(vt_pl$year)
+class(vt_pl$year)
+
+# 변수를 시계열 그래프용으로 변환
+EN <- xts(vt_pl$EN, order.by = vt_pl$year)
+CH <- xts(vt_pl$CH, order.by = vt_pl$year)
+JP <- xts(vt_pl$JP, order.by = vt_pl$year)
+ECT <- xts(vt_pl$ECT, order.by = vt_pl$year)
+
+# cbind 로 묶어서 변수 선언
+vt_dy <- cbind(EN, CH, JP, ECT)
+
+# 시계열 그래프 시각화
+dygraph(vt_dy) %>% 
+  dyRangeSelector()
+
+# pie chart
+# 외국인 관광객 총원
+library(readxl)
+cp_kf <- read_excel("cp_KF.xlsx")
+
+fsum <- vt_pl %>% 
+  select(EN, CH, JP, ECT)
+year <- cp_kf %>% 
+  select(기간)
+
+lng_sum <- apply(fsum,1,sum)
+fr_sum <- data.frame(vt_pl$year, lng_sum);fr_sum
+
+# 백분율
+en_per <- (vt_pl$EN/fr_sum$lng_sum)*100
+ch_per <- (vt_pl$CH/fr_sum$lng_sum)*100
+jp_per <- (vt_pl$JP/fr_sum$lng_sum)*100
+ect_per <- (vt_pl$ECT/fr_sum$lng_sum)*100
+
+vt_pie <- data.frame(vt_pl$year, en_per, ch_per, jp_per, ect_per);vt_pie
+vt_pie <- vt_pie %>% 
+  rename(year = vt_pl.year,
+         EN = en_per,
+         CH = ch_per,
+         JP = jp_per,
+         ECT = ect_per)
+
+# 파이는 연도별로 총 5개
+pie_15 <- vt_pie[1,]
+pie_16 <- vt_pie[2,]
+pie_17 <- vt_pie[3,]
+pie_18 <- vt_pie[4,]
+pie_19 <- vt_pie[5,]
+pie_20 <- vt_pie[6,]
+
+# pie_00 데이터 행렬 가공
+lang_p <- c("EN", "CH", "JP", "ECT")
+vt_p <- function(a){
+  
+  en <- a[1,2]
+  ch <- a[1,3]
+  jp <- a[1,4]
+  ect <- a[1,5]
+  
+  vt_p <- c(en, ch, jp, ect)
+  return(vt_p)
+}
+
+p_15 <- vt_p(pie_15)
+p_16 <- vt_p(pie_16)
+p_17 <- vt_p(pie_17)
+p_18 <- vt_p(pie_18)
+p_19 <- vt_p(pie_19)
+p_20 <- vt_p(pie_20)
+
+p_15 <- p_15 %>% 
+  round(1)
+p_16 <- p_16 %>% 
+  round(1)
+p_17 <- p_17 %>% 
+  round(1)
+p_18 <- p_18 %>% 
+  round(1)
+p_19 <- p_19 %>% 
+  round(1)
+p_20 <- p_20 %>% 
+  round(1)
+
+pie_15 <- data.frame(lang_p, p_15)
+pie_16 <- data.frame(lang_p, p_16)
+pie_17 <- data.frame(lang_p, p_17)
+pie_18 <- data.frame(lang_p, p_18)
+pie_19 <- data.frame(lang_p, p_19)
+pie_20 <- data.frame(lang_p, p_20)
+
+
+# pie chart visualization
+library(ggrepel)
+library(tidyverse);search()
+
+# 2015
+pie_2015 <- ggplot(pie_15, aes(x="", y=p_15, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_15, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2015 언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2016
+pie_2016 <- ggplot(pie_16, aes(x="", y=p_16, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_16, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2016 언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2017
+pie_2017 <- ggplot(pie_17, aes(x="", y=p_17, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_17, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2017언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2018
+pie_2018 <- ggplot(pie_18, aes(x="", y=p_18, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_18, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2018 언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2019
+pie_2019 <- ggplot(pie_19, aes(x="", y=p_19, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_19, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2019 언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2020
+pie_2020 <- ggplot(pie_20, aes(x="", y=p_20, fill=lang_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(p_20, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2020 언어권별 외국인 관광객 방문 추이")+
+  guides(fill = guide_legend(title = "언어권")) +
+  scale_fill_discrete(limits=lang_p)+
+  theme_void()
+
+# 2015 ~ 2020 pie chart 모아보기
+pie_2015
+pie_2016
+pie_2017
+pie_2018
+pie_2019
+pie_2020
+
+# =====================================================
+# db connection
+library(odbc)
+library(rJava)
+library(RJDBC)
+library(DBI)
+
+# db drive 생성
+#jdbc_d <- JDBC(driverClass = "oracle.jdbc.OracleDriver",
+#               classPath = "C:/Database/app/user/product/18.0.0/dbhomeXE/inventory/Scripts/ext/jlib/ojdbc8.jar")
+
+#dm_con1 <- dbConnect(jdbc_d,"jdbc:oracle:thin:@10.10.12.102:1521:XE",
+#                     "hr","hr")
+
+# 테이블 생성 후 데이터 삽입
+#dbWriteTable(dm_con1, "Visitor_Lang", vt_pl)
+
+# 데이터 정상 삽입 확인
+#dbGetQuery(dm_con1, "SELECT * FROM Visitor_Lang")
+
+#object.size(vt_pl)
+
+```
+
+
+### 国内訪問客対比外国人訪問客比較 ****************
+
+
+```{r}
+library(readxl)
+library(dplyr)
+library(ggrepel)
+library(tidyverse)
+library(dygraphs)
+library(xts)
+library(ggplot2)
+library(dplyr)
+
+cp_kf <- read_excel("cp_KF.xlsx")
+year <- c("2015", "2016", "2017", "2018", "2019", "2020")
+
+# 내국인 관광객 수
+ksum <- cp_kf %>% 
+  select(경복궁_내국인, 창덕궁_내국인, 창경궁_내국인, 덕수궁_내국인)
+year2 <- cp_kf %>% 
+  select(기간)
+
+vt_kor <- apply(ksum,1,sum)
+KR <- data.frame(year2, vt_kor)
+
+# 외국인 관광객 수
+fsum <- cp_kf %>% 
+  select(경복궁_외국인, 창덕궁_외국인, 창경궁_외국인, 덕수궁_외국인)
+
+vt_for <- apply(fsum,1,sum)
+FR <- data.frame(year2, vt_for)
+
+# 내국인 외국인 기간별 join
+vt_total <- left_join(KR, FR, by="기간")  # rename(year = 기간)
+vt_total <- vt_total %>% 
+  rename(year = 기간)
+
+
+# =====
+#시각화 - line graph
+library(ggplot2)
+
+visitor_KF <- ggplot(vt_total,aes(x=year))+
+  geom_line(aes(y=vt_kor, color = "내국인(KR)"), group=1)+
+  geom_line(aes(y=vt_for, color = "외국인(FR)"), group=2)+
+  ggtitle("국내 방문객 대비 외국인 방문객 비교 ")+
+  labs(x = "연도", y = "관광객 수", color = "내.외국인")
+  
+
+# =====
+#시각화 - interactive, pie
+
+# interactive line
+# 반응형 시계열 그래프
+library(dygraphs)
+library(xts)
+
+# year 의 요인들을 date 타입으로 바꾸기
+# 컬럼 내 특정 값 바꾸기
+class(vt_total$year)
+vt_total[vt_total$year == 2015, "year"] = "2015-01-01"
+vt_total[vt_total$year == 2016, "year"] = "2016-01-01"
+vt_total[vt_total$year == 2017, "year"] = "2017-01-01"
+vt_total[vt_total$year == 2018, "year"] = "2018-01-01"
+vt_total[vt_total$year == 2019, "year"] = "2019-01-01"
+vt_total[vt_total$year == 2020, "year"] = "2020-01-01"
+
+# year 값들을 date 타입으로 바꾸고 확인
+vt_total$year <- as.POSIXct(vt_total$year)
+class(vt_total$year)
+
+# 변수를 시계열 그래프용으로 변환
+KOR <- xts(vt_total$vt_kor, order.by = vt_total$year)
+FOR <- xts(vt_total$vt_for, order.by = vt_total$year)
+
+# cbind 로 묶어서 변수 선언
+total_dy <- cbind(KOR, FOR)
+
+# 시계열 그래프 시각화
+dygraph(total_dy) %>% 
+  dyRangeSelector()
+
+# pie
+# 내.외국인 관광객 총원
+
+tsum <- vt_total %>% 
+  select(vt_kor, vt_for)
+year <- cp_kf %>% 
+  select(기간)
+
+tsum <- apply(tsum, 1, sum)
+tsum <- data.frame(year, tsum)
+
+# 백분율
+kor_per <- (vt_total$vt_kor/tsum$tsum)*100
+for_per <- (vt_total$vt_for/tsum$tsum)*100
+
+kor_per <- kor_per %>% round(1)
+for_per <- for_per %>% round(1)
+
+t_pie <- data.frame(year, kor_per, for_per)
+t_pie <- t_pie %>% 
+  rename(year = 기간,
+         KR = kor_per,
+         FR = for_per)
+
+# 파이는 연도별로 총 5개
+tpie_15 <- t_pie[1,]
+tpie_16 <- t_pie[2,]
+tpie_17 <- t_pie[3,]
+tpie_18 <- t_pie[4,]
+tpie_19 <- t_pie[5,]
+tpie_20 <- t_pie[6,]
+
+# pie_00 데이터 행렬 가공
+kf_p <- c("KR", "FR")
+tt_p <- function(a){
+  
+  KR <- a[1,2]
+  FR <- a[1,3]
+  
+  tt_p <- c(KR, FR)
+  return(tt_p)
+  
+}
+
+# 연도별 내.외국인 백분율 추출
+kfp_15 <- tt_p(tpie_15)
+kfp_16 <- tt_p(tpie_16)
+kfp_17 <- tt_p(tpie_17)
+kfp_18 <- tt_p(tpie_18)
+kfp_19 <- tt_p(tpie_19)
+kfp_20 <- tt_p(tpie_20)
+
+# 내.외국인 기준으로 관광객 수 백분율을 data.frame
+tpie_15 <- data.frame(kf_p, kfp_15)
+tpie_16 <- data.frame(kf_p, kfp_16)
+tpie_17 <- data.frame(kf_p, kfp_17)
+tpie_18 <- data.frame(kf_p, kfp_18)
+tpie_19 <- data.frame(kf_p, kfp_19)
+tpie_20 <- data.frame(kf_p, kfp_20)
+
+# pie chart visualization
+library(ggrepel)
+library(tidyverse);search()
+
+# 2015
+tpie_2015 <- ggplot(tpie_15, aes(x="", y=kfp_15, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_15, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2015 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2016
+tpie_2016 <- ggplot(tpie_16, aes(x="", y=kfp_16, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_16, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2016 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2017
+tpie_2017 <- ggplot(tpie_17, aes(x="", y=kfp_17, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_17, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2017 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2018
+tpie_2018 <- ggplot(tpie_18, aes(x="", y=kfp_18, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_18, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2018 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2019
+tpie_2019 <- ggplot(tpie_19, aes(x="", y=kfp_19, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_19, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2019 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2020
+tpie_2020 <- ggplot(tpie_20, aes(x="", y=kfp_20, fill=kf_p)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.6, label = paste0(kfp_20, "%")),
+            position = position_stack(vjust = .5)) +
+  ggtitle("2020 국내 방문객 대비 외국인 방문객 비교")+
+  guides(fill = guide_legend(title = "내.외국인")) +
+  scale_fill_discrete(limits=kf_p)+
+  theme_void()
+
+# 2015 ~ 2020 pie chart 모아보기
+tpie_2015
+tpie_2016
+tpie_2017
+tpie_2018
+tpie_2019
+tpie_2020
+
+
+# =====================================================
+# db connection
+library(odbc)
+library(rJava)
+library(RJDBC)
+library(DBI)
+
+# db drive 생성
+#jdbc_d <- JDBC(driverClass = "oracle.jdbc.OracleDriver",
+#               classPath = "C:/Database/app/user/product/18.0.0/dbhomeXE/inventory/Scripts/ext/jlib/ojdbc8.jar")
+
+#dm_con1 <- dbConnect(jdbc_d,"jdbc:oracle:thin:@10.10.12.102:1521:XE",
+#                     "hr","hr")
+
+# 테이블 생성 후 데이터 삽입
+#dbWriteTable(dm_con1, "Visitor_KF", vt_total)
+
+# 데이터 정상 삽입 확인
+#dbGetQuery(dm_con1, "SELECT * FROM Visitor_KF")
+
+#object.size(vt_total)
+```
+
+
+###  グーグルトレンドとクロリングを利用した4大宮殿データ分析
+
+```{r kimbeomki}
+library(rvest);search()
+library(dplyr);search()
+library(stringr)   # str_sub()      # 문자 자르기
+library(readr)     # parse_number() #숫자만
+library(data.table);search() # %like% 연산자 
+library(ggplot2)
+library(dygraphs) # 인터렉티브 시계열 그래프
+library(xts) #시계열 데이터 생성
+library(ggplot2)
+library(tidyr)
+library(plotrix)
+library(readxl)
+library(wordcloud)
+library(RColorBrewer)
+library(odbc)
+library(rJava)
+library(RJDBC)
+library(DBI)
+library(wordcloud2)
+
+#미국
+
+ame_Gyeongbokgung <- read.csv("amerika.csv",encoding = "UTF-8")
+
+ame_chong <- read.csv("changduck.csv",encoding = "UTF-8")
+
+ame_ducksu <- read.csv("Deoksugung.csv",encoding = "UTF-8")
+
+ame_chongky <- read.csv("Changgyeonggung.csv",encoding = "UTF-8")
+
+goo_ame<- data.frame(ame_Gyeongbokgung,ame_chong,ame_ducksu,ame_chongky)
+
+
+
+new_goo<- goo_ame %>% select(2,3,5,8,11)
+
+new_go <- new_goo[,c(2,1,3,4,5)]
+
+
+#미국 검색빈도 파이 그래프
+
+sum_new_go<- new_go %>% summarise(ky_sum = sum(Gyeongbokgung),
+                                  ch_sum = sum(Changdeokgung),
+                                  cy_sum = sum(Deoksugung),
+                                  du_sum = sum(Changgyeonggung))
+
+
+rownames(sum_new_go) = c("value")
+colnames(sum_new_go) = c("value")
+
+sum_new_go<- t(sum_new_go)
+
+ame<- as.data.frame(sum_new_go)
+
+ame<- ame %>%  mutate(gong = "ky_sum")
+
+
+ame[2,2] <- "ch_sum"
+ame[3,2] <- "cy_sum"
+ame[4,2] <- "du_sum"
+
+
+#일반 파이 그래프
+pie(ame$value,labels = ame$gong)
+
+#GGPLOt
+ggplot(ame,aes(x="",y=value,fill=gong))+geom_bar(width = 1,stat = "identity")+coord_polar("y")+geom_text(aes(label=paste0(value)),position = position_stack(vjust = 0.5))+ ggtitle("2018~2022경복궁 검색 빈도 합계") +xlab(" ") + ylab("경복궁 검색 빈도")
+
+#3D 파이
+pie3D(ame$value,labels = ame$gong)
+
+#인터렉티브  
+
+new_go$date <- as.POSIXct(new_go$date) 
+
+                             
+Gyeongbokgung <- xts(new_go$Gyeongbokgung, order.by = new_go$date)
+Changdeokgung <- xts(new_go$Changdeokgung, order.by = new_go$date)
+Deoksugung <- xts(new_go$Deoksugung, order.by = new_go$date)
+Changgyeonggung <- xts(new_go$Changgyeonggung, order.by = new_go$date)
+
+
+my_ame_size<- cbind(Gyeongbokgung,Changdeokgung,Deoksugung,Changgyeonggung)
+
+#미국 검색 비율
+dygraph(my_ame_size) %>% dyRangeSelector()
+
+#일본
+
+ja_Gyeongbokgung <- read.csv("ja_kyoung.csv",encoding = "UTF-8")
+
+ja_chong <- read.csv("ja_chang.csv",encoding = "UTF-8")
+
+ja_ducksu <- read.csv("ja_ducksu.csv",encoding = "UTF-8")
+
+ja_chongky <- read.csv("ja_changgyoung.csv",encoding = "UTF-8")
+
+goo_ja<- data.frame(ja_Gyeongbokgung,ja_chong,ja_ducksu,ja_chongky)
+
+
+new_ja<- goo_ja %>% select(2,3,5,8,11)
+
+new_japan <- new_ja[,c(2,1,3,4,5)]
+
+new_japan_name <- new_japan %>% rename(ja_kyoung=경복궁...일본.,
+                                       ja_duck = 덕수궁...일본.,
+                                       ja_chang = 창덕궁...일본.,
+                                       ja_changkyung = 창경궁...일본.)
+
+
+
+new_japan_name$date <- as.POSIXct(new_japan_name$date) 
+
+Gyeongbokgung <- xts(new_japan_name$ja_kyoung, order.by = new_go$date)
+Changdeokgung <- xts(new_japan_name$ja_chang, order.by = new_go$date)
+Deoksugung <- xts(new_japan_name$ja_duck, order.by = new_go$date)
+Changgyeonggung <- xts(new_japan_name$ja_changkyung, order.by = new_go$date)
+
+
+my_ja_size<- cbind(Gyeongbokgung,Changdeokgung,Deoksugung,Changgyeonggung)
+
+
+#일본 검색 비율
+dygraph(my_ja_size) %>% dyRangeSelector()
+
+
+#중국
+
+ca_Gyeongbokgung <- read.csv("ch_kyong.csv",encoding = "UTF-8")
+
+ca_chong <- read.csv("ch_chong.csv",encoding = "UTF-8")
+
+ca_ducksu <- read.csv("ch_duck.csv",encoding = "UTF-8")
+
+ca_chongky <- read.csv("ch_chongkyoug.csv",encoding = "UTF-8")
+
+goo_ca<- data.frame(ca_Gyeongbokgung,ca_chong,ca_ducksu,ca_chongky)
+
+
+new_ca<- goo_ca %>% select(2,3,5,8,11)
+
+new_china <- new_ca[,c(2,1,3,4,5)]
+
+
+new_china_name <- new_china %>% rename(ca_kyoung=경복궁...대만.,
+                                       ca_duck = 덕수궁...대만.,
+                                       ca_chang = 창경궁...대만.,
+                                       ca_changkyung = 창경궁...대만..1)
+
+
+new_china_name$date <- as.POSIXct(new_china_name$date) 
+
+Gyeongbokgung <- xts(new_china_name$ca_kyoung, order.by = new_go$date)
+Changdeokgung <- xts(new_china_name$ca_chang, order.by = new_go$date)
+Deoksugung <- xts(new_china_name$ca_duck, order.by = new_go$date)
+Changgyeonggung <- xts(new_china_name$ca_changkyung, order.by = new_go$date)
+
+
+my_ca_size<- cbind(Gyeongbokgung,Changdeokgung,Deoksugung,Changgyeonggung)
+
+
+#중국  검색 비율
+dygraph(my_ca_size) %>% dyRangeSelector()
+
+#크롤링
+
+#크롤링 빈도 워드 클라우드
+
+jdbc_d <- JDBC(driverClass = "oracle.jdbc.OracleDriver",classPath = "C:/DATABASE/dbhomeXE/inventory/Scripts/ext/jlib/ojdbc8.jar")
+
+# db 드라이브 생성 ----
+
+
+dm_con1 <- dbConnect(jdbc_d,"jdbc:oracle:thin:@192.168.56.1:1521:XE",
+                     "hr","hr")
+
+
+#rs <- dbSendQuery(dm_con1, "CREATE TABLE samjo_word (title varchar2(20))")
+
+#dbClearResult(rs)
+
+my_kyoung=read_excel("naver_ky2.xlsx", sheet = 1)
+
+class(my_kyoung)
+dim(my_kyoung)
+
+title<-as.character(my_kyoung$title)
+word<-strsplit(title, " ")
+
+words<-unlist(word)
+
+#한번만 사용해야 합니다. 테이블생성하고 데이터를 바로 넣는 작업이라
+#dbWriteTable(dm_con1, "SAMJO_WORD", words)
+
+#데이터가 정상적으로 들어갔는지 확인 작업입니다.
+dbGetQuery(dm_con1, "SELECT * FROM SAMJO_WORD")
+
+#DB에서 할수 있지만 R에서도 전처리가 가능하다는걸 보여주기 위한 코드입니다.
+#특수기호들을 지워보겠습니다.
+temp1<- dbGetQuery(dm_con1, "SELECT X,REGEXP_REPLACE(X,'[[:punct:]]','') as words
+           FROM SAMJO_WORD")
+
+tab1<-table(temp1$WORDS)
+tab2<-sort(tab1, decreasing = T)
+
+pal<-brewer.pal(8, "Accent")
+
+
+wordcloud(names(tab2),
+          freq = tab2,
+          max.words = 50,
+          random.order = F,
+          rot.per = .1,
+          scale = c(7,0.3),
+          colors = pal
+          )
+
+#워드 클라우드 심화버전
+#글자 위에 커서를 올리면 벨류값을 볼수 있습니다!
+
+tab1<-table(words)
+tab2<-sort(tab1, decreasing = T)
+
+
+#별모양
+wordcloud2(data=tab2,color = "random-light", backgroundColor = "grey",fontFamily = '나눔바른고딕',shape='star')
+
+
+```
+
+#### ドラえもんのなんでもワードクラウドにするユーザー関数~~~
+
+```{r doraemong}
+library(rvest);search()
+library(dplyr);search()
+library(stringr)   # str_sub()      # 문자 자르기
+library(readr)     # parse_number() #숫자만
+library(data.table);search() # %like% 연산자 
+library(ggplot2)
+library(dygraphs) # 인터렉티브 시계열 그래프
+library(xts) #시계열 데이터 생성
+library(ggplot2)
+library(tidyr)
+library(plotrix)
+library(readxl)
+library(wordcloud)
+library(RColorBrewer)
+library(odbc)
+library(rJava)
+library(RJDBC)
+library(DBI)
+library(wordcloud2)
+
+doraemong2<-function(x){
+
+  #캐릭터 타입으로 변환
+  title<-as.character(x)
+  
+  #띄어 쓰기 기준으로 자르기
+  word<-strsplit(title, " ")
+  
+  #리스트를 벡터로 만ㄷ르어 줍니다.
+  words<-unlist(word)
+  
+  #특문 문자를 지웁니다.
+  cm_words<- gsub("[[:punct:]]", "", words)
+  
+  #빈도 수를 조사합니다.
+  tab1<-table(cm_words)
+  #정렬합니다.
+  tab2<-sort(tab1, decreasing = T)
+  
+  pal<-brewer.pal(8, "Accent")
+  
+  tab3<- wordcloud2(data=tab2,color = "random-light", backgroundColor = "grey",fontFamily = '나눔바른고딕')
+  
+  return(tab3)
+}
+
+
+doraemong2(my_kyoung)
+
+```
+
+#### 4大宮殿の季節別データ分析及び外国人総員
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(data.table)       # like함수 사용
+library(psych)
+# ggplot 그래프 여러개 띄우는 package
+library(gridExtra)
+library(plotly)
+
+# Excel 데이터입력 완료!
+samjo1 <- read_excel("4대궁 관람객 수 현황_2015.xlsx")
+samjo2 <- read_excel("4대궁 관람객 수 현황_2016.xlsx")
+samjo3 <- read_excel("4대궁 관람객 수 현황_2017.xlsx")
+samjo4 <- read_excel("4대궁 관람객 수 현황_2018.xlsx")
+samjo5 <- read_excel("4대궁 관람객 수 현황_2019.xlsx")
+samjo6 <- read_excel("4대궁 관람객 수 현황_2020.xlsx")
+
+# join
+sam_01 <- samjo1 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+sam_02 <- samjo2 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+sam_03 <- samjo3 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+sam_04 <- samjo4 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+sam_05 <- samjo5 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+sam_06 <- samjo6 %>% select("일자", "경복궁_외국인_총원","덕수궁_외국인_총원", "창경궁_외국인_총원", "창덕궁_외국인_총원")
+
+sam_year15 <- sam_01 %>% filter(일자 == "2015년")
+sam_year16 <- sam_02 %>% filter(일자 == "2016년")
+sam_year17 <- sam_03 %>% filter(일자 == "2017년")
+sam_year18 <- sam_04 %>% filter(일자 == "2018년")
+sam_year19 <- sam_05 %>% filter(일자 == "2019년")
+sam_year20 <- sam_06 %>% filter(일자 == "2020년")
+
+# bind - 문제 1번 용
+a <- bind_rows(sam_year15, sam_year16)
+b <- bind_rows(a, sam_year17)
+c <- bind_rows(b, sam_year18)
+d <- bind_rows(c, sam_year19)
+e <- bind_rows(d, sam_year20)
+# 4대 궁 중에 외국인들이 어디 제일 많이 방문하는지-궁별/계절별 (민)
+
+
+sum(e$경복궁_외국인_총원)  # 8425705
+sum(e$덕수궁_외국인_총원)  # 1548866
+sum(e$창경궁_외국인_총원)  # 332711
+sum(e$창덕궁_외국인_총원)  # 2578258
+
+# 컬럼명 변경
+e <- rename(e,
+            ytd = "일자",
+            Gyungbok_v.t = "경복궁_외국인_총원",
+            Duksoo_v.t = "덕수궁_외국인_총원",
+            Changkyung_v.t = "창경궁_외국인_총원",
+            Changduk_v.t = "창덕궁_외국인_총원")
+head(e,4)
+# 4대 궁 중, 외국인들이 어디궁을 제일 많이 방문하는지 ----
+ques1 <- ggplot(e, 
+       aes(x = ytd))+
+  geom_line(aes(y = Gyungbok_v.t, color = "경복궁"),size = 1.2, group=1)+
+  geom_line(aes(y = Duksoo_v.t, color = "덕수궁"),size = 1.2, group=2)+
+  geom_line(aes(y = Changkyung_v.t, color = "창경궁"), size = 1.2, group=3)+
+  geom_line(aes(y = Changduk_v.t, color = "창덕궁"), size = 1.2, group=4)+
+  ggtitle("년도별 외국인 방문 궁")+
+  labs(x = "year", y = "visitor", color = "4대 궁")
+
+# 인터렉티브 그래프
+ggplotly(ques1)
+
+(options(scipen=100000))   # 2e+6등의 문자를 지정숫자기준으로 출력
+
+# 4대 궁 중, 계절별 어디궁을 많이 방문하는지 ----
+sam_season1 <- sam_01 %>% filter(일자 %like% "2015년")
+sam_season2 <- sam_02 %>% filter(일자 %like% "2016년")
+sam_season3 <- sam_03 %>% filter(일자 %like% "2017년")
+sam_season4 <- sam_04 %>% filter(일자 %like% "2018년")
+sam_season5 <- sam_05 %>% filter(일자 %like% "2019년")
+sam_season6 <- sam_06 %>% filter(일자 %like% "2020년")
+
+# bind - 문제 2번 용
+sa <- bind_rows(sam_season1, sam_season2)
+sb <- bind_rows(sa, sam_season3)
+sc <- bind_rows(sb, sam_season4)
+sd <- bind_rows(sc, sam_season5)
+se <- bind_rows(sd, sam_season6)
+# 컬럼명 변경
+se <- rename(se,
+             Gyungbok_v.t = "경복궁_외국인_총원",
+             Duksoo_v.t = "덕수궁_외국인_총원",
+             Changkyung_v.t = "창경궁_외국인_총원",
+             Changduk_v.t = "창덕궁_외국인_총원")
+
+se <- rename(se,
+             ytd = "일자")
+
+spr <- se %>% filter(ytd == "2015년 봄")
+summ <- se %>% filter(ytd == "2015년 여름")
+fall <- se %>% filter(ytd == "2015년 가을")
+win <- se %>% filter(ytd == "2015년 겨울")
+# 계절별로 4대궁 외국인이 어느계졀에 많이 방문했는지 확인
+
+gyungbok_t <- ggplot(data = se, aes(y = ytd, x = Gyungbok_v.t, fill= Gyungbok_v.t)) + 
+  geom_col(width=0.7)
+duksoo_t <- ggplot(data = se, aes(y = ytd, x = Duksoo_v.t, fill = Duksoo_v.t)) + 
+  geom_col(width=0.7)
+changkyung_t <- ggplot(data = se, aes(y = ytd, x = Changkyung_v.t, fill = Changkyung_v.t)) + 
+  geom_col(width=0.7)
+changduk_t <- ggplot(data = se, aes(y = ytd, x = Changduk_v.t, fill = Changduk_v.t)) +
+  geom_col(width=0.7)
+
+grid.arrange(gyungbok_t, duksoo_t, ncol=2)
+
+# 2015년에 외국인 방문수 - 계절별
+ggplot(sam_season1, aes(x = 일자, y = 경복궁_외국인_총원))+
+  geom_col() + coord_flip()
+ggplot(sam_season1, aes(x = 일자, y = 덕수궁_외국인_총원, fill = 덕수궁_외국인_총원))+
+ geom_bar(stat = 'identity', width=0.7)+ coord_flip() + theme(axis.text = element_text(size = 10))
+
+ggplot(sam_season1, aes(x = 일자, y = 창경궁_외국인_총원, fill = as.factor(창경궁_외국인_총원)))+
+  geom_col()+coord_flip()
+ggplot(sam_season1, aes(x = 일자, y = 창덕궁_외국인_총원, fill = as.factor(덕수궁_외국인_총원))) +
+  geom_bar(stat = 'identity', position = 'dodge', width=0.7) + coord_flip()
+
+# 사용자 함수
+# 두개의 년도를 입력해 해당 년도데이터를 비교
+sam_compare <- function(a,b){
+  a <- e %>% filter(ytd == a) 
+  b <- e %>% filter(ytd == b)
+  a <- print(a)
+  b <- print(b)
+}
+sam_compare("2015년","2020년")
+```
+
+## *<**ソウル訪問外国人観光客数対比宮訪問外国人観覧客分析**>*
+
+```{r}
+library(RJDBC)
+library(DBI)
+library(rJava)
+library(odbc)
+library(dplyr)
+
+# db 연결----
+ins.drivers <- odbcListDrivers()
+
+jdbc_d <- JDBC(driverClass = "oracle.jdbc.OracleDriver",classPath = "C:/DATABASE/dbhomeXE/inventory/Scripts/ext/jlib/ojdbc8.jar")
+
+# db 드라이브 생성 ----
+
+
+dm_con1 <- dbConnect(jdbc_d,"jdbc:oracle:thin:@192.168.56.1:1521:XE",
+                     "hr","hr")
+dm_con1
+
+
+
+# 엑셀파일 가져오기 (사용자 정의 함수 사용) ----
+excel <- function(a, data){
+  
+  library(readxl)
+  data <- read_excel(a)
+  data <- rename(data, day = 일자)
+  data <- rename(data, gyeongbok_adfee = 경복궁_유료)
+  data <- rename(data, gyeongbok_free = 경복궁_무료)
+  data <- rename(data, gyeongbok_total = 경복궁_일별_총원)
+  data <- rename(data, gyeongbok_local = 경복궁_내국인)
+  data <- rename(data, gyeongbok_eng = 경복궁_영어권)
+  data <- rename(data, gyeongbok_jap = 경복궁_일본어권)
+  data <- rename(data, gyeongbok_chi = 경복궁_중국어권)
+  data <- rename(data, gyeongbok_oth = 경복궁_기타)
+  data <- rename(data, gyeongbok_foreign_total = 경복궁_외국인_총원)
+  
+  data <- rename(data, deoksu_adfee = 덕수궁_유료)
+  data <- rename(data, deoksu_free = 덕수궁_무료)
+  data <- rename(data, deoksu_total = 덕수궁_일별_총원)
+  data <- rename(data, deoksu_local = 덕수궁_내국인)
+  data <- rename(data, deoksu_eng = 덕수궁_영어권)
+  data <- rename(data, deoksu_jap = 덕수궁_일본어권)
+  data <- rename(data, deoksu_chi = 덕수궁_중국어권)
+  data <- rename(data, deoksu_oth = 덕수궁_기타)
+  data <- rename(data, deoksu_foreign_total = 덕수궁_외국인_총원)
+  
+  data <- rename(data, changgyeong_adfee = 창경궁_유료)
+  data <- rename(data, changgyeong_free = 창경궁_무료)
+  data <- rename(data, changgyeong_total = 창경궁_일별_총원)
+  data <- rename(data, changgyeong_local = 창경궁_내국인)
+  data <- rename(data, changgyeong_eng = 창경궁_영어권)
+  data <- rename(data, changgyeong_jap = 창경궁_일본어권)
+  data <- rename(data, changgyeong_chi = 창경궁_중국어권)
+  data <- rename(data, changgyeong_oth = 창경궁_기타)
+  data <- rename(data, changgyeong_foreign_total = 창경궁_외국인_총원)
+  
+  data <- rename(data, changdeok_adfee = 창덕궁_유료)
+  data <- rename(data, changdeok_free = 창덕궁_무료)
+  data <- rename(data, changdeok_total = 창덕궁_일별_총원)
+  data <- rename(data, changdeok_local = 창덕궁_내국인)
+  data <- rename(data, changdeok_eng = 창덕궁_영어권)
+  data <- rename(data, changdeok_jap = 창덕궁_일본어권)
+  data <- rename(data, changdeok_chi = 창덕궁_중국어권)
+  data <- rename(data, changdeok_oth = 창덕궁_기타)
+  data <- rename(data, changdeok_foreign_total = 창덕궁_외국인_총원)
+  
+  return(data)
+}
+
+pal_2015 <- excel("4대궁 관람객 수 현황_2015.xlsx")
+pal_2016 <- excel("4대궁 관람객 수 현황_2016.xlsx")
+pal_2017 <- excel("4대궁 관람객 수 현황_2017.xlsx")
+pal_2018 <- excel("4대궁 관람객 수 현황_2018.xlsx")
+pal_2019 <- excel("4대궁 관람객 수 현황_2019.xlsx")
+pal_2020 <- excel("4대궁 관람객 수 현황_2020.xlsx")
+
+
+
+# 새로운 컬럼 생성 ----
+pal_2015<- pal_2015 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                 changgyeong_foreign_total+changdeok_foreign_total)
+pal_2016 <- pal_2016 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                  changgyeong_foreign_total+changdeok_foreign_total)
+pal_2017 <- pal_2017 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                  changgyeong_foreign_total+changdeok_foreign_total)
+pal_2018 <- pal_2018 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                  changgyeong_foreign_total+changdeok_foreign_total)
+pal_2019 <- pal_2019 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                  changgyeong_foreign_total+changdeok_foreign_total)
+pal_2020 <- pal_2020 %>% mutate(total = gyeongbok_foreign_total+deoksu_foreign_total+
+                                  changgyeong_foreign_total+changdeok_foreign_total)
+
+
+
+# db에 저장 ----
+#dbWriteTable(dm_con1, "mini_project_15", pal_2015)
+#dbWriteTable(dm_con1, "mini_project_16", pal_2016)
+#dbWriteTable(dm_con1, "mini_project_17", pal_2017)
+#dbWriteTable(dm_con1, "mini_project_18", pal_2018)
+#dbWriteTable(dm_con1, "mini_project_19", pal_2019)
+#dbWriteTable(dm_con1, "mini_project_20", pal_2020)
+
+
+
+# db에서 필요한 부분만 가져오기 ----
+db_15 <- "select * from mini_project_15 where day like '%년%'"
+db_2015 <- dbGetQuery(dm_con1, db_15)
+
+
+db_16 <- "select * from mini_project_16 where day like '%년%'"
+db_2016 <- dbGetQuery(dm_con1, db_16)
+
+
+db_17 <- "select * from mini_project_17 where day like '%년%'"
+db_2017 <- dbGetQuery(dm_con1, db_17)
+
+
+db_18 <- "select * from mini_project_18 where day like '%년%'"
+db_2018 <- dbGetQuery(dm_con1, db_18)
+
+
+db_19 <- "select * from mini_project_19 where day like '%년%'"
+db_2019 <- dbGetQuery(dm_con1, db_19)
+
+
+db_20 <- "select * from mini_project_20 where day like '%년%'"
+db_2020 <- dbGetQuery(dm_con1, db_20)
+
+
+
+# 컬럼명 소문자로 변경  ----
+
+
+colnames(db_2015) <- tolower(colnames(db_2015))
+colnames(db_2016) <- tolower(colnames(db_2016))
+colnames(db_2017) <- tolower(colnames(db_2017))
+colnames(db_2018) <- tolower(colnames(db_2018))
+colnames(db_2019) <- tolower(colnames(db_2019))
+colnames(db_2020) <- tolower(colnames(db_2020))
+#View(db_2015)
+
+
+
+# 데이터 결합 (bind-row) ---- 
+pal_total <- bind_rows (db_2015, db_2016)
+pal_total <- bind_rows (pal_total, db_2017)
+pal_total <- bind_rows (pal_total, db_2018)
+pal_total <- bind_rows (pal_total, db_2019)
+pal_total <- bind_rows (pal_total, db_2020)
+#View(pal_total)
+
+
+
+# 새로운 컬럼 생성 (사용자 정의 함수) ----
+eng_fun <- function(a){
+  
+  qfun <- a %>% mutate(eng_total = gyeongbok_eng+deoksu_eng+
+                         changgyeong_eng+changdeok_eng)
+  qfun <- qfun %>% select(day, eng_total)
+  return(qfun)
+}
+
+jap_fun <- function(a){
+  
+  qfun <- a %>% mutate(jap_total = gyeongbok_jap+deoksu_jap+
+                         changgyeong_jap+changdeok_jap)
+  qfun <- qfun %>% select(day, jap_total)
+  return(qfun)
+}
+
+chi_fun <- function(a){
+  
+  qfun <- a %>% mutate(chi_total = gyeongbok_chi+deoksu_chi+
+                         changgyeong_chi+changdeok_chi)
+  qfun <- qfun %>% select(day, chi_total)
+  return(qfun)
+}
+
+oth_fun <- function(a){
+  
+  qfun <- a %>% mutate(oth_total = gyeongbok_oth+deoksu_oth+
+                         changgyeong_oth+changdeok_oth)
+  qfun <- qfun %>% select(day, oth_total)
+  return(qfun)
+}
+
+
+pal_total_chi <- chi_fun(pal_total)
+pal_total_jap <- jap_fun(pal_total)
+pal_total_eng <- eng_fun(pal_total)
+pal_total_oth <- oth_fun(pal_total)
+
+
+
+# 데이터 결합 (full_join) ----
+join_fun <- function(a, b, c, d){
+  full_1 <- full_join(a, b, by="day")
+  full_2 <- full_join(full_1, c, by="day")
+  full_3 <- full_join(full_2, d, by="day")
+  return(full_3)
+}
+
+pal_total_vis <- join_fun(pal_total_eng, pal_total_chi, pal_total_jap, pal_total_oth)
+# View(pal_total_vis)
+
+
+
+# 엑셀 파일 가져오기  
+for_total <- read_excel("15-21 한국 방문 외국인.xlsx")
+
+
+
+# 컬럼명 변경 후 데이터 결합 (left_join)
+for_total <- rename(for_total, day = 일자)
+vis_palvis <- left_join(pal_total, for_total, by="day")
+#View(vis_palvis)
+```
+
+
+```{r}
+library(stringr)
+library(ggplot2)
+library(dplyr)
+
+
+
+# 데이터 결합 (full_join) 후 필요한 컬럼만 가져오기
+vis_total_info <- full_join(pal_total_vis, vis_palvis, by="day")
+#names(vis_total_info)
+vis_total_info <- vis_total_info %>% select(1, 42, 2, 3, 4, 5, 43, 46, 49, 52, 55)
+#View(vis_total_info)
+
+
+
+# 한국 방문 대비 4대궁 방문 전체 외국인 비율
+vis_total_info <- vis_total_info %>% mutate(vis_avg_total =(total/총원)*100)
+
+
+
+# 한국방문 대비 4대궁 방문 / 미방문 영어권 비율
+vis_total_info <- vis_total_info %>% mutate(궁_방문객_영어권 = (eng_total/영어_총원)*100)  
+vis_total_info <- vis_total_info %>% mutate(궁_미방문객_영어권 = (영어_총원 - eng_total)/영어_총원*100)
+
+
+# 한국방문 대비 4대궁 방문 / 미방문 일본어권 비율
+vis_total_info <- vis_total_info %>% mutate(궁_방문객_일본어권 = (jap_total/일본_총원)*100)  
+vis_total_info <- vis_total_info %>% mutate(궁_미방문객_일본어권 = (일본_총원 - jap_total)/일본_총원*100)
+
+
+# 한국방문 대비 4대궁 방문 / 미방문 중국어권 비율
+vis_total_info <- vis_total_info %>% mutate(궁_방문객_중국어권 = (chi_total/중국_총원)*100)  
+vis_total_info <- vis_total_info %>% mutate(궁_미방문객_중국어권 = (중국_총원 - chi_total)/중국_총원*100)
+
+
+# 한국방문 대비 4대궁 방문 / 미방문 기타 비율
+vis_total_info <- vis_total_info %>% mutate(궁_방문객_기타 = (oth_total/기타_총원)*100)  
+vis_total_info <- vis_total_info %>% mutate(궁_미방문객_기타 = (기타_총원-oth_total)/기타_총원*100)
+
+
+# vis_total_info %>% select(12, 13, 14, 15, 16)
+# vis_total_info[,c(5,9)]
+# names(vis_total_info)
+# vis_total_info %>% select(12, 13, 14, 15, 16, 17)
+# vis_total_info[,c(5,8)]
+# View(vis_total_info)
+
+
+
+# 엑셀파일 가져오기기
+visit_info <- read_excel("mini_project.xlsx")
+# View(visit_info)
+
+
+# 필요 컬럼만 뽑아서 가져오기 (년도별/언어권 별 4대궁 방문 외국인 비율 (방문자 / 미방문자))
+per_2015_eng <- visit_info[c(12:13),c(1,2)]
+per_2015_jap <- visit_info[c(14:15),c(1,2)]
+per_2015_chi <- visit_info[c(16:17),c(1,2)]
+per_2015_oth <- visit_info[c(18:19),c(1,2)]
+
+
+per_2016_eng <- visit_info[c(12:13),c(1,3)]
+per_2016_jap <- visit_info[c(14:15),c(1,3)]
+per_2016_chi <- visit_info[c(16:17),c(1,3)]
+per_2016_oth <- visit_info[c(18:19),c(1,3)]
+
+
+per_2017_eng <- visit_info[c(12:13),c(1,4)]
+per_2017_jap <- visit_info[c(14:15),c(1,4)]
+per_2017_chi <- visit_info[c(16:17),c(1,4)]
+per_2017_oth <- visit_info[c(18:19),c(1,4)]
+
+
+per_2018_eng <- visit_info[c(12:13),c(1,5)]
+per_2018_jap <- visit_info[c(14:15),c(1,5)]
+per_2018_chi <- visit_info[c(16:17),c(1,5)]
+per_2018_oth <- visit_info[c(18:19),c(1,5)]
+
+
+per_2019_eng <- visit_info[c(12:13),c(1,6)]
+per_2019_jap <- visit_info[c(14:15),c(1,6)]
+per_2019_chi <- visit_info[c(16:17),c(1,6)]
+per_2019_oth <- visit_info[c(18:19),c(1,6)]
+
+
+per_2020_eng <- visit_info[c(12:13),c(1,7)]
+per_2020_jap <- visit_info[c(14:15),c(1,7)]
+per_2020_chi <- visit_info[c(16:17),c(1,7)]
+per_2020_oth <- visit_info[c(18:19),c(1,7)]
+
+```
+
+
+####  **年度及び言語圏別の4大宮殿訪問、未訪問者比率**
+```{r}
+library(stringr)
+library(ggplot2)
+library(dplyr)
+
+# 년도별 / 언어권별 4대궁 방문,미방문자 비율 파이 그래프
+
+# 2015년
+ggplot(data=per_2015_eng)+geom_bar(aes(x="", y=`2015`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2015`/2 + c(0, cumsum(`2015`)[-length(`2015`)]),
+                label = paste0(round(`2015`/ sum(`2015`)*100,1), "%")))+
+  ggtitle("2015년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2015_jap)+geom_bar(aes(x="", y=`2015`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2015`/2 + c(0, cumsum(`2015`)[-length(`2015`)]),
+                label = paste0(round(`2015`/ sum(`2015`)*100,1), "%")))+
+  ggtitle("2015년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2015_chi)+geom_bar(aes(x="", y=`2015`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2015`/2 + c(0, cumsum(`2015`)[-length(`2015`)]),
+                label = paste0(round(`2015`/ sum(`2015`)*100,1), "%")))+
+  ggtitle("2015년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2015_oth)+geom_bar(aes(x="", y=`2015`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2015`/2 + c(0, cumsum(`2015`)[-length(`2015`)]),
+                label = paste0(round(`2015`/ sum(`2015`)*100,1), "%")))+
+  ggtitle("2015년 한국 방문 대비 4대궁 방문 비율 (기타)")
+
+
+
+# 2016년
+ggplot(data=per_2016_eng)+geom_bar(aes(x="", y=`2016`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2016`/2 + c(0, cumsum(`2016`)[-length(`2016`)]),
+                label = paste0(round(`2016`/ sum(`2016`)*100,1), "%")))+
+  ggtitle("2016년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2016_jap)+geom_bar(aes(x="", y=`2016`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2016`/2 + c(0, cumsum(`2016`)[-length(`2016`)]),
+                label = paste0(round(`2016`/ sum(`2016`)*100,1), "%")))+
+  ggtitle("2016년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2016_chi)+geom_bar(aes(x="", y=`2016`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2016`/2 + c(0, cumsum(`2016`)[-length(`2016`)]),
+                label = paste0(round(`2016`/ sum(`2016`)*100,1), "%")))+
+  ggtitle("2016년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2016_oth)+geom_bar(aes(x="", y=`2016`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2016`/2 + c(0, cumsum(`2016`)[-length(`2016`)]),
+                label = paste0(round(`2016`/ sum(`2016`)*100,1), "%")))+
+  ggtitle("2016년 한국 방문 대비 4대궁 방문 비율 (기타)")
+
+
+
+# 2017년
+ggplot(data=per_2017_eng)+geom_bar(aes(x="", y=`2017`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2017`/2 + c(0, cumsum(`2017`)[-length(`2017`)]),
+                label = paste0(round(`2017`/ sum(`2017`)*100,1), "%")))+
+  ggtitle("2017년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2017_jap)+geom_bar(aes(x="", y=`2017`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2017`/2 + c(0, cumsum(`2017`)[-length(`2017`)]),
+                label = paste0(round(`2017`/ sum(`2017`)*100,1), "%")))+
+  ggtitle("2017년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2017_chi)+geom_bar(aes(x="", y=`2017`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2017`/2 + c(0, cumsum(`2017`)[-length(`2017`)]),
+                label = paste0(round(`2017`/ sum(`2017`)*100,1), "%")))+
+  ggtitle("2017년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2017_oth)+geom_bar(aes(x="", y=`2017`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2017`/2 + c(0, cumsum(`2017`)[-length(`2017`)]),
+                label = paste0(round(`2017`/ sum(`2017`)*100,1), "%")))+
+  ggtitle("2017년 한국 방문 대비 4대궁 방문 비율 (기타)")
+
+
+
+# 2018년
+ggplot(data=per_2018_eng)+geom_bar(aes(x="", y=`2018`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2018`/2 + c(0, cumsum(`2018`)[-length(`2018`)]),
+                label = paste0(round(`2018`/ sum(`2018`)*100,1), "%")))+
+  ggtitle("2018년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2018_jap)+geom_bar(aes(x="", y=`2018`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2018`/2 + c(0, cumsum(`2018`)[-length(`2018`)]),
+                label = paste0(round(`2018`/ sum(`2018`)*100,1), "%")))+
+  ggtitle("2018년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2018_chi)+geom_bar(aes(x="", y=`2018`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2018`/2 + c(0, cumsum(`2018`)[-length(`2018`)]),
+                label = paste0(round(`2018`/ sum(`2018`)*100,1), "%")))+
+  ggtitle("2018년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2018_oth)+geom_bar(aes(x="", y=`2018`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2018`/2 + c(0, cumsum(`2018`)[-length(`2018`)]),
+                label = paste0(round(`2018`/ sum(`2018`)*100,1), "%")))+
+  ggtitle("2018년 한국 방문 대비 4대궁 방문 비율 (기타)")
+
+
+
+# 2019년
+ggplot(data=per_2019_eng)+geom_bar(aes(x="", y=`2019`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2019`/2 + c(0, cumsum(`2019`)[-length(`2019`)]),
+                label = paste0(round(`2019`/ sum(`2019`)*100,1), "%")))+
+  ggtitle("2019년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2019_jap)+geom_bar(aes(x="", y=`2019`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2019`/2 + c(0, cumsum(`2019`)[-length(`2019`)]),
+                label = paste0(round(`2019`/ sum(`2019`)*100,1), "%")))+
+  ggtitle("2019년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2019_chi)+geom_bar(aes(x="", y=`2019`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2019`/2 + c(0, cumsum(`2019`)[-length(`2019`)]),
+                label = paste0(round(`2019`/ sum(`2019`)*100,1), "%")))+
+  ggtitle("2019년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2019_oth)+geom_bar(aes(x="", y=`2019`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2019`/2 + c(0, cumsum(`2019`)[-length(`2019`)]),
+                label = paste0(round(`2019`/ sum(`2019`)*100,1), "%")))+
+  ggtitle("2019년 한국 방문 대비 4대궁 방문 비율 (기타)")
+
+
+
+# 2020년
+ggplot(data=per_2020_eng)+geom_bar(aes(x="", y=`2020`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2020`/2 + c(0, cumsum(`2020`)[-length(`2020`)]),
+                label = paste0(round(`2020`/ sum(`2020`)*100,1), "%")))+
+  ggtitle("2020년 한국 방문 대비 4대궁 방문 비율 (영어권)")
+
+ggplot(data=per_2020_jap)+geom_bar(aes(x="", y=`2020`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2020`/2 + c(0, cumsum(`2020`)[-length(`2020`)]),
+                label = paste0(round(`2020`/ sum(`2020`)*100,1), "%")))+
+  ggtitle("2020년 한국 방문 대비 4대궁 방문 비율 (일본어권)")
+
+ggplot(data=per_2020_chi)+geom_bar(aes(x="", y=`2020`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2020`/2 + c(0, cumsum(`2020`)[-length(`2020`)]),
+                label = paste0(round(`2020`/ sum(`2020`)*100,1), "%")))+
+  ggtitle("2020년 한국 방문 대비 4대궁 방문 비율 (중국어권)")
+
+ggplot(data=per_2020_oth)+geom_bar(aes(x="", y=`2020`, fill=방문여부), width=1, stat = "identity")+
+  coord_polar("y", start = 0)+
+  geom_text(aes(x="", y= `2020`/2 + c(0, cumsum(`2020`)[-length(`2020`)]),
+                label = paste0(round(`2020`/ sum(`2020`)*100,1), "%")))+
+  ggtitle("2020년 한국 방문 대비 4대궁 방문 비율 (기타)")
+```
+
+####  **2015年~2020年アメリカ州(state)別の4大宮殿関連単語検索率**
+##### 関心度数値0~100(100に近いほど検索率が高い)
+
+```{r}
+library(ggiraphExtra)
+library(mapproj)
+library(maps)
+library(ggplot2)
+library(tibble)
+library(rvest)
+library(dplyr)
+library(stringr)   # str_sub()      # 문자 자르기
+library(readr)     # parse_number() #숫자만
+library(data.table)
+library(ggplot2)
+library(dygraphs) # 인터렉티브 시계열 그래프
+library(xts) #시계열 데이터 생성
+library(ggplot2)
+library(tidyr)
+library(plotrix)
+library(readxl)
+library(wordcloud)
+library(RColorBrewer)
+library(odbc)
+library(rJava)
+library(RJDBC)
+library(DBI)
+library(wordcloud2)
+# map_data("state")
+ins.drivers <- odbcListDrivers()
+
+jdbc_d <- JDBC(driverClass = "oracle.jdbc.OracleDriver",classPath = "C:/DATABASE/dbhomeXE/inventory/Scripts/ext/jlib/ojdbc8.jar")
+
+# db 드라이브 생성 ----
+
+
+dm_con1 <- dbConnect(jdbc_d,"jdbc:oracle:thin:@192.168.56.1:1521:XE",
+                     "hr","hr")
+dm_con1
+
+
+
+# 엑셀 파일 가져오기 (사용자 정의 함수) ----
+xl_usa <- function(x){
+  
+  switch(x, us_1 = read_excel("my_USA.xlsx", sheet = 1, col_names = T),
+         us_2 = read_excel("my_USA.xlsx", sheet = 2, col_names = T),
+         us_3 = read_excel("my_USA.xlsx", sheet = 3, col_names = T),
+         us_4 = read_excel("my_USA.xlsx", sheet = 4, col_names = T),
+         us_5 = read_excel("my_USA.xlsx", sheet = 5, col_names = T),
+         us_6 = read_excel("my_USA.xlsx", sheet = 6, col_names = T),
+         us_7 = read_excel("my_USA.xlsx", sheet = 7, col_names = T))
+         
+}
+
+us_1 <- xl_usa("us_1")
+us_2 <- xl_usa("us_2")
+us_3 <- xl_usa("us_3")
+us_4 <- xl_usa("us_4")
+us_5 <- xl_usa("us_5")
+us_6 <- xl_usa("us_6")
+us_7 <- xl_usa("us_7")
+
+
+
+# 데이터 결합 후 NA 값 0으로 변경 (사용자 정의 함수)  ----
+bind_fun <- function(a, b, c, d, e, f, g){
+  aa <- bind_rows(a, b)
+  aaa <- bind_rows(aa, c)
+  aaaa <- bind_rows(aaa, d)
+  aaaaa <- bind_rows(aaaa, e)
+  aaaaaa <- bind_rows(aaaaa, f)
+  aaaaaaa <- bind_rows(aaaaaa, g)
+  xxx <- aaaaaaa %>% mutate(search_rate, replace(., is.na(.), 0))
+  xxx <- xxx %>% arrange(-search_rate, state)
+  return(xxx)
+}
+
+my_data <- bind_fun(us_1, us_2, us_3, us_4, us_5, us_6, us_7)
+# my_data
+# View(my_data)
+
+
+
+# db에 파일 저장 후 불러오기
+#dbWriteTable(dm_con1, "mini_project_usmap", my_data)
+
+
+USA_map <- "select * from mini_project_usmap order by search_rate desc, state"
+USA_map <- dbGetQuery(dm_con1, USA_map)
+USA_map <- map_data("state")
+
+ggChoropleth(data=my_data, # 지도에 표현할 데이터
+             map=USA_map,  # 지도데이터
+             aes(fill=search_rate,
+                 map_id=state),
+             title="USA search Rate(Palace)",
+             col="darkblue",
+             interactive=T)
+
+```
+
+
+
+
